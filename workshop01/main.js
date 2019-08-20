@@ -56,18 +56,23 @@ app.get('/map', (req, resp) => {
     //Latitude and longitude from coord object above
     //API key is in keys.map
     const params = {
+        center: `${coord.lat},${coord.lon}`,
+        size: '500x500',
+        zoom: '10',
+        markers: `size:mid|color:red|label:A|${coord.lat},${coord.lon}`,
+        key: keys.map
     }
 
-    // getMap({ qs: params, encoding: null})
-    //     .then(result => {
-    //         resp.status(200);
-    //         resp.type('image/png')
-    //         resp.send(result);
-    //     })
-    //     .catch(error => {
-    //         resp.status(400);
-    //         resp.send(error);
-    //     });
+    getMap({ qs: params, encoding: null})
+        .then(result => {
+            resp.status(200);
+            resp.type('image/png')
+            resp.send(result);
+        })
+        .catch(error => {
+            resp.status(400);
+            resp.send(error);
+        });
 });
 
 app.get('/information', (req, resp) => {
@@ -81,6 +86,9 @@ app.get('/information', (req, resp) => {
     //Weather for city is in cityName variable
     //API key is in keys.weather
     const params = {
+        q: cityName,
+        units: 'metric',
+        appid: keys.weather
     }
 
     getWeather(params)
@@ -93,6 +101,9 @@ app.get('/information', (req, resp) => {
             //The 2 character country code is found in countryCode variable
             //API key is in keys.news
             const params = {
+                country : countryCode,
+                category : 'technology',
+                apiKey: keys.news
             }
             return (Promise.all([ result, getNews(params) ]));
         })
