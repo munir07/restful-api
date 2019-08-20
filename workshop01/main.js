@@ -5,7 +5,7 @@ const request = require('request');
 
 //Load application keys
 //Rename _keys.json file to keys.json
-const keys = require('./_keys.json');
+const keys = require('./keys.json');
 
 //Configure the PORT
 const PORT = parseInt(process.argv[2] || process.env.APP_PORT || 3000);
