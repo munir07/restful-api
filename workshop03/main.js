@@ -38,6 +38,11 @@ app.use(express.urlencoded({ extended: true }));
 const citySchema = require('./schema/city-schema.json');
 //console.info(citySchema);
 
+new OpenAPIValidator(
+	{
+		apiSpecPath: __dirname + '/schema/city-api.yaml'
+	}
+).install(app)
 
 // Start of workshop
 // TODO 2/2 Copy your routes from workshop02 here
@@ -48,7 +53,7 @@ const citySchema = require('./schema/city-schema.json');
 app.get('/api/states', (req, resp) => {
 	db.findAllStates()
 		.then(result => {
-			resp.status(200);
+			resp.status(206);
 			resp.type('application/json');
 			resp.json(
 				result.map(v => `/api/state/${v}`)

@@ -1,0 +1,39 @@
+openapi: "3.0.2"
+
+info:
+    title: "Cities API"
+    description: "My API for cities"
+    version: "v1.0"
+
+servers:
+  - url: http://localhost:3000
+    description: "Development server"
+  - url: http://localhost:4000
+    description: "Production server"
+
+paths:
+    /api/state/{stateId}:
+      get:
+          description: "Returns a list of cities from the state"
+          operationId: getStates
+          parameters:
+            - name : stateId
+              in : path
+              required: true
+              schema:
+                  $ref: "city-schema.json#/definitions/states"
+              responses:
+                  206:
+                      description: "Partial list of cities"
+                      content:
+                          "application/json":
+                              schema:
+                                  type: array
+                                  items:
+                                      type: string
+                  400:
+                      description: "Error"
+                      content:
+                          "text/plain":
+                              schema:
+                                  type: string
