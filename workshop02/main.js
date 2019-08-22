@@ -103,11 +103,12 @@ app.get('/api/city/:cityId', (req, resp) => {
 
 // TODO POST /api/city
 app.post('/api/city', (req, resp) => {
-	db.insertCity(req.body)
+	const data = req.body;
+	db.insertCity(data)
 		.then(result => {
-			resp.status(200);
+			resp.status(201);
 			resp.type('application/json');
-			resp.json(result);
+			resp.json({ message: 'City added successfully.'});
 		})
 		.catch(error => {
 			resp.status(400);
